@@ -1,8 +1,12 @@
 package com.assignment.stableSoftware.horse;
 
+import com.assignment.stableSoftware.feedingTime.FeedingTime;
+import com.assignment.stableSoftware.food.Food;
 import com.assignment.stableSoftware.owner.Owner;
 import com.assignment.stableSoftware.stable.Stable;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Horse {
@@ -26,6 +30,16 @@ public class Horse {
     @JoinColumn(name = "stable_id")
     private Stable stable;
 
+    @ManyToMany
+    @JoinTable(
+            name = "horse_food",
+            joinColumns = @JoinColumn(name = "horse_id"),
+            inverseJoinColumns = @JoinColumn(name = "food_id")
+    )
+    private List<Food> foods;
+
+    @OneToMany(mappedBy = "horse", cascade = CascadeType.ALL) // optional: orphanRemoval = true
+    private List<FeedingTime> feedingTimes;
 
     public Long getId() {
         return id;
@@ -81,5 +95,21 @@ public class Horse {
 
     public void setStable(Stable stable) {
         this.stable = stable;
+    }
+
+    public List<Food> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(List<Food> foods) {
+        this.foods = foods;
+    }
+
+    public List<FeedingTime> getFeedingTimes() {
+        return feedingTimes;
+    }
+
+    public void setFeedingTimes(List<FeedingTime> feedingTimes) {
+        this.feedingTimes = feedingTimes;
     }
 }
