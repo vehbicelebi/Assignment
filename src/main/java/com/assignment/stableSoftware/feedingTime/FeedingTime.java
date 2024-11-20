@@ -19,8 +19,8 @@ public class FeedingTime {
     @Enumerated(EnumType.STRING)
     private Operation operation;
 
-    @Column(name = "missed_feeding_range")
-    private int missedFeedingRange;
+    // @Column(name = "missed_feeding_range")
+    // private int missedFeedingRange;
 
     @ManyToOne
     @JoinColumn(name = "horse_id")
@@ -66,7 +66,7 @@ public class FeedingTime {
     public void setOperation(Operation operation) {
         this.operation = operation;
     }
-
+/*
     public int getMissedFeedingRange() {
         return missedFeedingRange;
     }
@@ -74,4 +74,5 @@ public class FeedingTime {
     public void setMissedFeedingRange(int missedFeedingRange) {
         this.missedFeedingRange = missedFeedingRange;
     }
+ */
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,20 +32,18 @@ public class FeedingTimeController {
     }
 
     @GetMapping("/eligible")
-    public ResponseEntity<List<Horse>> getEligibleForFeeding(@RequestParam LocalTime time){
-        List<Horse> horses = horseService.getAllHorses();
-        List<Horse> result = null;
+    public ResponseEntity<List<HorseDTO>> getEligibleForFeeding(@RequestParam LocalTime time){
+        List<Horse> eligibleHorses = feedingTimeService.getEligibleHorses(time);
+        List<HorseDTO> horseDTOS = new ArrayList<>();
 
-        for (Horse horse : horses){
-            if (feedingTimeService.eligibleForFeeding(horse, time)) {
-                result.add(horse);
-            }
+        for (Horse horse : eligibleHorses) {
+            horseDTOS.add(horseMapper.toHorseDTO(horse));
         }
 
-        if(result.isEmpty())
+        if (horseDTOS.isEmpty())
             return ResponseEntity.noContent().build();
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(horseDTOS);
     }
 
     @PutMapping("/releaseFood/{id}")
@@ -55,5 +54,58 @@ public class FeedingTimeController {
         FeedingTimeDTO updatedFeedingTimeDTO = feedingTimeMapper.toFeedingTimeDTO(updatedFeedingTime);
 
         return ResponseEntity.ok(updatedFeedingTimeDTO);
+    }
+
+    @PutMapping("/markAsDone/{id}")
+    public ResponseEntity<FeedingTimeDTO> markFeedingAsDoneMethod(@PathVariable Long id){
+        FeedingTime updatedFeedingTime = feedingTimeService.markFeedingAsDone(id);
+        FeedingTimeDTO updatedFeedingTimeDTO = feedingTimeMapper.toFeedingTimeDTO(updatedFeedingTime);
+
+        return ResponseEntity.ok(updatedFeedingTimeDTO);
+    }
+
+    @GetMapping("/unfedForMoreThanXHours")
+    public ResponseEntity<List<HorseDTO>> getUnfedHorsesForMoreThanXHoursMethod(@RequestParam int hours) {
+        List<Horse> unfedHorses = feedingTimeService.getUnfedHorsesForMoreThanXHours(hours);
+        List<HorseDTO> horseDTOS = new ArrayList<>();
+
+        for (Horse horse : unfedHorses) {
+            horseDTOS.add(horseMapper.toHorseDTO(horse));
+        }
+
+        if (horseDTOS.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(horseDTOS);
+    }
+
+    @GetMapping("/missedFeedings")
+    public ResponseEntity<List<HorseDTO>> getHorsesWithMissedFeedingsMethod(@RequestParam int missedCount) {
+        List<Horse> horsesWithMissedFeedings = feedingTimeService.getHorsesWithMissedFeedings(missedCount);
+        List<HorseDTO> horseDTOS = new ArrayList<>();
+
+        for (Horse horse : horsesWithMissedFeedings) {
+            horseDTOS.add(horseMapper.toHorseDTO(horse));
+        }
+
+        if(horseDTOS.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(horseDTOS);
+    }
+
+    @GetMapping("/incompleteMeals")
+    public ResponseEntity<List<HorseDTO>> getHorsesWithIncompleteMealsMethod() {
+        List<Horse> horsesWithIncompleteMeals = feedingTimeService.getHorsesWithIncompleteMeals();
+        List<HorseDTO> horseDTOS = new ArrayList<>();
+
+        for (Horse horse : horsesWithIncompleteMeals) {
+            horseDTOS.add(horseMapper.toHorseDTO(horse));
+        }
+
+        if (horseDTOS.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(horseDTOS);
     }
 }

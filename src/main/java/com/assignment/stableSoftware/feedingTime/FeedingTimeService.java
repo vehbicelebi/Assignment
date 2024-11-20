@@ -5,9 +5,9 @@ import com.assignment.stableSoftware.operation.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FeedingTimeService {
@@ -19,26 +19,18 @@ public class FeedingTimeService {
         this.feedingTimeRepository = feedingTimeRepository;
     }
 
-    public boolean eligibleForFeeding(Horse horse, LocalTime time){
-        List<FeedingTime> feedingTimes = horse.getFeedingTimes();
+    public List<Horse> getEligibleHorses(LocalTime time){
+        List<Horse> eligibleHorses = new ArrayList<>();
+        List<FeedingTime> feedingTimes = feedingTimeRepository.findAll();
 
         for (FeedingTime ft : feedingTimes){
-            if(time == ft.getTime())
-                return true;
+            if (time.equals(ft.getTime())){
+                eligibleHorses.add(ft.getHorse());
+            }
         }
-
-        return false;
+        return eligibleHorses;
     }
 
-    public Operation releaseFood(){
-        return Operation.DONE;
-    }
-
-    /*
-    public FeedingTime getOneFeedingTime(Long id){
-        return feedingTimeRepository.findById(id);
-    }
-   */
     public FeedingTime updateFeedingTime(Long id, FeedingTime feedingTimeDetails){
         FeedingTime feedingTime = feedingTimeRepository.findById(id).orElseThrow(() -> new RuntimeException("Feeding time not found"));
         feedingTime.setOperation(feedingTimeDetails.getOperation());
@@ -49,16 +41,59 @@ public class FeedingTimeService {
         return feedingTimeRepository.save(feedingTime);
     }
 
-    public boolean checkUnfedHorses(LocalTime time){
-        List<FeedingTime> feedingTimes = feedingTimeRepository.findAll();
+    public FeedingTime markFeedingAsDone(Long id){
+        FeedingTime feedingTime = feedingTimeRepository.findById(id).orElseThrow(() -> new RuntimeException("Feeding time not found"));
+        feedingTime.setOperation(Operation.DONE);
 
-        for (FeedingTime ft : feedingTimes){
-            if (time.getHour() > ft.getTime().getHour()){
-                ft.setMissedFeedingRange(ft.getMissedFeedingRange() + 1);
-                return true;
-            }
-        }
-        return false;
+        return feedingTimeRepository.save(feedingTime);
     }
 
+    public List<Horse> getUnfedHorsesForMoreThanXHours(int hours){
+        List<Horse> unfedHorses = new ArrayList<>();
+        List<FeedingTime> feedingTimes = feedingTimeRepository.findAll();
+        LocalTime currentTime = LocalTime.now();
+
+        for (FeedingTime ft : feedingTimes){
+            if (ft.getOperation() != Operation.DONE && Duration.between(ft.getTime(), currentTime).toHours() > hours){
+                unfedHorses.add(ft.getHorse());
+            }
+        }
+
+        return unfedHorses;
+    }
+
+    public List<Horse> getHorsesWithMissedFeedings(int missedCount) {
+        List<Horse> horsesWithMissedFeedings = new ArrayList<>();
+        List<FeedingTime> feedingTimes = feedingTimeRepository.findAll();
+        Map<Horse, Integer> missedFeedignMap = new HashMap<>();
+
+        for (FeedingTime ft : feedingTimes) {
+            if (ft.getOperation() != Operation.DONE) {
+                missedFeedignMap.put(ft.getHorse(), missedFeedignMap.getOrDefault(ft.getHorse(), 0) + 1);
+            } else {
+                missedFeedignMap.put(ft.getHorse(), 0);
+            }
+        }
+
+        for (Map.Entry<Horse, Integer> entry : missedFeedignMap.entrySet()) {
+            if (entry.getValue() >= missedCount) {
+                horsesWithMissedFeedings.add(entry.getKey());
+            }
+        }
+
+        return horsesWithMissedFeedings;
+    }
+
+    public List<Horse> getHorsesWithIncompleteMeals() {
+        List<Horse> horsesWithIncompleteMeals = new ArrayList<>();
+        List<FeedingTime> feedingTimes = feedingTimeRepository.findAll();
+
+        for (FeedingTime ft : feedingTimes) {
+            if (ft.getOperation() != Operation.DONE) {
+                horsesWithIncompleteMeals.add(ft.getHorse());
+            }
+        }
+
+        return horsesWithIncompleteMeals;
+    }
 }
