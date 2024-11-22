@@ -1,0 +1,10 @@
+Table,"Create Table"
+feeding_preference,"CREATE TABLE `feeding_preference` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `amount` int DEFAULT NULL,
+  `food_type` varchar(255) DEFAULT NULL,
+  `horse_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UKl496bew4sm9pdti69i4fuot41` (`horse_id`),
+  CONSTRAINT `FKpe6tkquj5x8rw69wku6xltw87` FOREIGN KEY (`horse_id`) REFERENCES `horse` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"

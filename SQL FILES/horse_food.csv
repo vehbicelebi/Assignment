@@ -1,0 +1,9 @@
+Table,"Create Table"
+horse_food,"CREATE TABLE `horse_food` (
+  `horse_id` bigint NOT NULL,
+  `food_id` bigint NOT NULL,
+  KEY `FKiym15rl87adixje0abhxwvkan` (`food_id`),
+  KEY `FKjn134g86xrmuf7wrjc5a3qbxc` (`horse_id`),
+  CONSTRAINT `FKiym15rl87adixje0abhxwvkan` FOREIGN KEY (`food_id`) REFERENCES `food` (`id`),
+  CONSTRAINT `FKjn134g86xrmuf7wrjc5a3qbxc` FOREIGN KEY (`horse_id`) REFERENCES `horse` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"

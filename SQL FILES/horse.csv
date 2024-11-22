@@ -1,0 +1,15 @@
+Table,"Create Table"
+horse,"CREATE TABLE `horse` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `breed` varchar(255) DEFAULT NULL,
+  `guid` varchar(255) DEFAULT NULL,
+  `nick_name` varchar(255) DEFAULT NULL,
+  `official_name` varchar(255) DEFAULT NULL,
+  `owner_id` bigint DEFAULT NULL,
+  `stable_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKl0ndmjatvnevopfxjsvqt768d` (`owner_id`),
+  KEY `FK13qf0qj4o3ec0gkqwj60rxc26` (`stable_id`),
+  CONSTRAINT `FK13qf0qj4o3ec0gkqwj60rxc26` FOREIGN KEY (`stable_id`) REFERENCES `stable` (`id`),
+  CONSTRAINT `FKl0ndmjatvnevopfxjsvqt768d` FOREIGN KEY (`owner_id`) REFERENCES `owner` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"

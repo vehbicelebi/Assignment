@@ -1,0 +1,11 @@
+Table,"Create Table"
+feeding_time,"CREATE TABLE `feeding_time` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `missed_feeding_range` int DEFAULT NULL,
+  `operation` enum('DONE','NOT_DONE') DEFAULT NULL,
+  `time` time(6) DEFAULT NULL,
+  `horse_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKb30awh95wtqhmv30bruenap5n` (`horse_id`),
+  CONSTRAINT `FKb30awh95wtqhmv30bruenap5n` FOREIGN KEY (`horse_id`) REFERENCES `horse` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
