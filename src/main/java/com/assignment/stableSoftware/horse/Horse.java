@@ -38,7 +38,7 @@ public class Horse {
     )
     private List<Food> foods;
 
-    @OneToMany(mappedBy = "horse", cascade = CascadeType.ALL) // optional: orphanRemoval = true
+    @OneToMany(mappedBy = "horse", cascade = CascadeType.ALL)
     private List<FeedingTime> feedingTimes;
 
     public Long getId() {

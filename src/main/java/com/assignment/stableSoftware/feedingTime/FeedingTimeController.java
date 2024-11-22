@@ -19,7 +19,6 @@ import java.util.Optional;
 public class FeedingTimeController {
     private FeedingTimeService feedingTimeService;
     private HorseMapper horseMapper;
-    private HorseService horseService;
     private FeedingTimeMapper feedingTimeMapper;
 
 
@@ -27,7 +26,6 @@ public class FeedingTimeController {
     public FeedingTimeController(FeedingTimeService feedingTimeService, HorseMapper horseMapper, HorseService horseService, FeedingTimeMapper feedingTimeMapper) {
         this.feedingTimeService = feedingTimeService;
         this.horseMapper = horseMapper;
-        this.horseService = horseService;
         this.feedingTimeMapper = feedingTimeMapper;
     }
 

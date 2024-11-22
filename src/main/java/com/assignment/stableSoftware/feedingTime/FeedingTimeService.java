@@ -13,7 +13,6 @@ import java.util.*;
 @Service
 public class FeedingTimeService {
     private FeedingTimeRepository feedingTimeRepository;
-    private Operation operation;
     private HorseRepository horseRepository;
 
     @Autowired

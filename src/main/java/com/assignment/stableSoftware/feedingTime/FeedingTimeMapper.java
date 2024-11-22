@@ -14,7 +14,6 @@ public class FeedingTimeMapper {
 
         feedingTimeDTO.setLocalTime(feedingTime.getTime());
         feedingTimeDTO.setOperation(feedingTime.getOperation());
-        //feedingTimeDTO.setHorse(feedingTime.getHorse());
         feedingTimeDTO.setHorseId(feedingTime.getHorse().getId());
 
         return feedingTimeDTO;

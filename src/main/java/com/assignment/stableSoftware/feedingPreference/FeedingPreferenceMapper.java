@@ -1,6 +1,5 @@
 package com.assignment.stableSoftware.feedingPreference;
 
-import com.assignment.stableSoftware.horse.Horse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,8 +14,6 @@ public class FeedingPreferenceMapper {
         feedingPreferenceDTO.setAmount(feedingPreference.getAmount());
         feedingPreferenceDTO.setFoodType(feedingPreference.getFoodType());
         feedingPreferenceDTO.setHorse(feedingPreference.getHorse());
-        // feedingPreferenceDTO.setHorseId(feedingPreference.getHorse().getId());
-
 
         return feedingPreferenceDTO;
     }
@@ -29,7 +26,7 @@ public class FeedingPreferenceMapper {
         feedingPreference.setFoodType(feedingPreferenceDTO.getFoodType());
         feedingPreference.setAmount(feedingPreferenceDTO.getAmount());
         feedingPreference.setHorse(feedingPreferenceDTO.getHorse());
-        // feedingPreference.setHorse(horse);
+
         return feedingPreference;
     }
 }

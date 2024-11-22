@@ -8,7 +8,6 @@ import java.time.LocalTime;
 public class FeedingTimeDTO {
     private LocalTime localTime;
     private Operation operation;
-    //private Horse horse;
     private Long horseId;
     public LocalTime getLocalTime() {
         return localTime;
@@ -33,14 +32,4 @@ public class FeedingTimeDTO {
     public void setHorseId(Long horseId) {
         this.horseId = horseId;
     }
-/*
-    public Horse getHorse() {
-        return horse;
-    }
-
-    public void setHorse(Horse horse) {
-        this.horse = horse;
-    }
-
- */
 }
