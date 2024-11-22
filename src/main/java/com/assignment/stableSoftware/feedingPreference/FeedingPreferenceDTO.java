@@ -6,7 +6,7 @@ public class FeedingPreferenceDTO {
     private String foodType;
     private int amount;
     private Horse horse;
-    private Long horseId;
+    //private Long horseId;
 
 
     public String getFoodType() {
@@ -32,7 +32,7 @@ public class FeedingPreferenceDTO {
     public void setHorse(Horse horse) {
         this.horse = horse;
     }
-
+/*
     public Long getHorseId() {
         return horseId;
     }
@@ -40,4 +40,6 @@ public class FeedingPreferenceDTO {
     public void setHorseId(Long horseId) {
         this.horseId = horseId;
     }
+
+ */
 }

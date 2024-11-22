@@ -22,8 +22,9 @@ public class FeedingPreferenceService {
         return feedingPreferenceRepository.findById(id);
     }
 
-    public FeedingPreference createFeedingPreference(FeedingPreference feedingPreference, Long horseId){
-        Horse horse = horseRepository.findById(horseId).orElseThrow(() -> new RuntimeException("Horse not found"));
+    public FeedingPreference createFeedingPreference(FeedingPreference feedingPreference){
+
+        Horse horse = horseRepository.findById(feedingPreference.getHorse().getId()).orElseThrow(() -> new RuntimeException("Horse not found"));
         feedingPreference.setHorse(horse);
         return feedingPreferenceRepository.save(feedingPreference);
     }

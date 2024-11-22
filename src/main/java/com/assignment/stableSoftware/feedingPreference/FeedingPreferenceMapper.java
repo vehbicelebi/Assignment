@@ -15,13 +15,13 @@ public class FeedingPreferenceMapper {
         feedingPreferenceDTO.setAmount(feedingPreference.getAmount());
         feedingPreferenceDTO.setFoodType(feedingPreference.getFoodType());
         feedingPreferenceDTO.setHorse(feedingPreference.getHorse());
-        feedingPreferenceDTO.setHorseId(feedingPreference.getHorse().getId());
+        // feedingPreferenceDTO.setHorseId(feedingPreference.getHorse().getId());
 
 
         return feedingPreferenceDTO;
     }
 
-    public FeedingPreference toFeedingPreference(FeedingPreferenceDTO feedingPreferenceDTO, Horse horse){
+    public FeedingPreference toFeedingPreference(FeedingPreferenceDTO feedingPreferenceDTO){
         if (feedingPreferenceDTO == null)
             return null;
 
@@ -29,7 +29,7 @@ public class FeedingPreferenceMapper {
         feedingPreference.setFoodType(feedingPreferenceDTO.getFoodType());
         feedingPreference.setAmount(feedingPreferenceDTO.getAmount());
         feedingPreference.setHorse(feedingPreferenceDTO.getHorse());
-        feedingPreference.setHorse(horse);
+        // feedingPreference.setHorse(horse);
         return feedingPreference;
     }
 }

@@ -35,10 +35,12 @@ public class FeedingPreferenceController {
 
     @PostMapping
     public ResponseEntity<FeedingPreferenceDTO> persistFeedingPreference(@RequestBody FeedingPreferenceDTO feedingPreferenceDTO){
-        Horse horse = horseService.getOneHorse(feedingPreferenceDTO.getHorseId()).orElseThrow(() -> new RuntimeException("Horse not found")); // Geänderte Zeile
 
-        FeedingPreference feedingPreference = feedingPreferenceMapper.toFeedingPreference(feedingPreferenceDTO, horse); // Geänderte Zeile
-        FeedingPreference createdFeedingPreference = feedingPreferenceService.createFeedingPreference(feedingPreference, horse.getId());
+        Horse horse = horseService.getOneHorse(feedingPreferenceDTO.getHorse().getId()).orElseThrow(() -> new RuntimeException("Horse not found"));
+
+        FeedingPreference feedingPreference = feedingPreferenceMapper.toFeedingPreference(feedingPreferenceDTO);
+        feedingPreference.setHorse(horse);
+        FeedingPreference createdFeedingPreference = feedingPreferenceService.createFeedingPreference(feedingPreference);
         FeedingPreferenceDTO createdFeedingPreferenceDTO = feedingPreferenceMapper.toFeedingPreferenceDTO(createdFeedingPreference);
 
         return ResponseEntity.ok(createdFeedingPreferenceDTO);
@@ -46,8 +48,11 @@ public class FeedingPreferenceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<FeedingPreferenceDTO> updateFeedingPreference(@PathVariable("id") Long id, @RequestBody FeedingPreferenceDTO feedingPreferenceDTO){
-        Horse horse = horseService.getOneHorse(feedingPreferenceDTO.getHorseId()).orElseThrow(() -> new RuntimeException("Horse not found"));
-        FeedingPreference feedingPreferenceDetails = feedingPreferenceMapper.toFeedingPreference(feedingPreferenceDTO, horse);
+
+        Horse horse = horseService.getOneHorse(feedingPreferenceDTO.getHorse().getId()).orElseThrow(() -> new RuntimeException("Horse not found"));
+
+        FeedingPreference feedingPreferenceDetails = feedingPreferenceMapper.toFeedingPreference(feedingPreferenceDTO);
+        feedingPreferenceDetails.setHorse(horse);
         FeedingPreference updatedFeedingPreference = feedingPreferenceService.updateFeedingPreference(id, feedingPreferenceDetails);
         FeedingPreferenceDTO updatedFeedingPreferenceDTO = feedingPreferenceMapper.toFeedingPreferenceDTO(updatedFeedingPreference);
 
