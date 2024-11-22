@@ -1,10 +1,16 @@
 package com.assignment.stableSoftware.horse;
 
+import com.assignment.stableSoftware.owner.Owner;
+import com.assignment.stableSoftware.stable.Stable;
+
 public class HorseDTO {
     private String guid;
     private String officialName;
     private String nickName;
     private String breed;
+
+    private Owner owner;
+    private Stable stable;
 
     public String getGuid() {
         return guid;
@@ -36,5 +42,21 @@ public class HorseDTO {
 
     public void setBreed(String breed) {
         this.breed = breed;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public Stable getStable() {
+        return stable;
+    }
+
+    public void setStable(Stable stable) {
+        this.stable = stable;
     }
 }

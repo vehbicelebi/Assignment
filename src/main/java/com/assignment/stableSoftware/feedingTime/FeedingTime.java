@@ -11,16 +11,11 @@ public class FeedingTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //@Column(name = "time")
-    //private String time;
     @Basic
     private LocalTime time;
 
     @Enumerated(EnumType.STRING)
     private Operation operation;
-
-    // @Column(name = "missed_feeding_range")
-    // private int missedFeedingRange;
 
     @ManyToOne
     @JoinColumn(name = "horse_id")
@@ -42,15 +37,6 @@ public class FeedingTime {
         this.time = time;
     }
 
-    /*
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-        */
     public Horse getHorse() {
         return horse;
     }
@@ -66,13 +52,4 @@ public class FeedingTime {
     public void setOperation(Operation operation) {
         this.operation = operation;
     }
-/*
-    public int getMissedFeedingRange() {
-        return missedFeedingRange;
-    }
-
-    public void setMissedFeedingRange(int missedFeedingRange) {
-        this.missedFeedingRange = missedFeedingRange;
-    }
- */
 }

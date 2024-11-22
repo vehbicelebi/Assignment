@@ -17,6 +17,8 @@ public class HorseMapper {
         horseDTO.setOfficialName(horse.getOfficialName());
         horseDTO.setNickName(horse.getNickName());
         horseDTO.setBreed(horse.getBreed());
+        horseDTO.setOwner(horse.getOwner());
+        horseDTO.setStable(horse.getStable());
 
         return horseDTO;
     }
@@ -31,6 +33,8 @@ public class HorseMapper {
         horse.setOfficialName(horseDTO.getOfficialName());
         horse.setNickName(horseDTO.getNickName());
         horse.setBreed(horseDTO.getBreed());
+        horse.setOwner(horseDTO.getOwner());
+        horse.setStable(horseDTO.getStable());
 
         return horse;
     }

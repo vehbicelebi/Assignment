@@ -1,6 +1,7 @@
 package com.assignment.stableSoftware.feedingTime;
 
 import com.assignment.stableSoftware.horse.Horse;
+import com.assignment.stableSoftware.horse.HorseRepository;
 import com.assignment.stableSoftware.operation.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,18 @@ import java.util.*;
 public class FeedingTimeService {
     private FeedingTimeRepository feedingTimeRepository;
     private Operation operation;
+    private HorseRepository horseRepository;
 
     @Autowired
-    public FeedingTimeService(FeedingTimeRepository feedingTimeRepository) {
+    public FeedingTimeService(FeedingTimeRepository feedingTimeRepository, HorseRepository horseRepository) {
         this.feedingTimeRepository = feedingTimeRepository;
+        this.horseRepository = horseRepository;
+    }
+
+    public FeedingTime createFeedingTime(FeedingTime feedingTime, Long horseId){
+        Horse horse = horseRepository.findById(horseId).orElseThrow(() -> new RuntimeException("Horse not found"));
+        feedingTime.setHorse(horse);
+        return feedingTimeRepository.save(feedingTime);
     }
 
     public List<Horse> getEligibleHorses(LocalTime time){

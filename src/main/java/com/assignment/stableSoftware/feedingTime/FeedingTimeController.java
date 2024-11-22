@@ -46,10 +46,19 @@ public class FeedingTimeController {
         return ResponseEntity.ok(horseDTOS);
     }
 
+    @PostMapping
+    public ResponseEntity<FeedingTimeDTO> persistFeedingTime(@RequestBody FeedingTimeDTO feedingTimeDTO){
+        FeedingTime feedingTime = feedingTimeMapper.toFeedingTime(feedingTimeDTO, null);
+        FeedingTime createdFeedingTime = feedingTimeService.createFeedingTime(feedingTime, feedingTimeDTO.getHorseId());
+        FeedingTimeDTO createdFeedingTimeDTO = feedingTimeMapper.toFeedingTimeDTO(createdFeedingTime);
+
+        return ResponseEntity.ok(createdFeedingTimeDTO);
+    }
+
     @PutMapping("/releaseFood/{id}")
     public ResponseEntity<FeedingTimeDTO> persistReleaseFood(@PathVariable Long id, @RequestBody FeedingTimeDTO feedingTimeDTO){
         // FeedingTime feedingTime = feedingTimeService.getOneFeedingTime(id);
-        FeedingTime feedingTimeDetails = feedingTimeMapper.toFeedingTime(feedingTimeDTO);
+        FeedingTime feedingTimeDetails = feedingTimeMapper.toFeedingTime(feedingTimeDTO, null);
         FeedingTime updatedFeedingTime = feedingTimeService.updateFeedingTime(id, feedingTimeDetails);
         FeedingTimeDTO updatedFeedingTimeDTO = feedingTimeMapper.toFeedingTimeDTO(updatedFeedingTime);
 

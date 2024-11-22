@@ -17,8 +17,6 @@ public class FeedingPreference {
     @JoinColumn(name = "horse_id", referencedColumnName = "id")
     private Horse horse;
 
-
-
     public Long getId() {
         return id;
     }
